@@ -24,6 +24,18 @@ public class RequestSpecs {
                 .build();
     }
 
+    public static RequestSpecification petStoreRequest(){
+        return new RequestSpecBuilder()
+                .setBaseUri("https://petstore.swagger.io/v2")
+                .setContentType(ContentType.JSON)
+                .build();
+    }
+    public static RequestSpecification petStoreFileRequest(){
+        return new RequestSpecBuilder()
+                .setBaseUri("https://petstore.swagger.io/v2")
+                .setContentType(ContentType.MULTIPART)
+                .build();
+    }
     public static ResponseSpecification buildAResponse(){
         ResponseSpecification resSpec = new ResponseSpecBuilder()
                 .expectStatusCode(200)
