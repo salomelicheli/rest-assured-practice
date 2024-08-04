@@ -20,7 +20,6 @@ public class UpdatePetResourceSteps extends CommonElements{
                 .contentType(ContentType.URLENC)
                 .formParam("name", updatedName)
                 .formParam("status", updatedStatus)
-                .when()
                 .post("/pet/{petId}", petDetails.getInt("id"));
     }
 

@@ -1,11 +1,13 @@
 package ge.tbc.itacademy.data.requestspecifications;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
+import static ge.tbc.itacademy.data.constants.Constants.*;
 import static io.restassured.RestAssured.given;
 
 public class RequestSpecs {
@@ -30,16 +32,34 @@ public class RequestSpecs {
                 .setContentType(ContentType.JSON)
                 .build();
     }
-    public static RequestSpecification petStoreFileRequest(){
+
+    public static RequestSpecification getRequestSpecForPlanets(){
         return new RequestSpecBuilder()
-                .setBaseUri("https://petstore.swagger.io/v2")
-                .setContentType(ContentType.MULTIPART)
-                .build();
+                .setBaseUri(PLANETS_BASE_URI)
+                .setContentType(ContentType.JSON)
+                .build()
+                .filter(new AllureRestAssured());
     }
+
+    public static RequestSpecification getPetStoreRequest(){
+        return new RequestSpecBuilder()
+                .setBaseUri(PET_STORE_BASE_URI)
+                .setContentType(ContentType.JSON)
+                .build()
+                .filter(new AllureRestAssured());
+    }
+
+    public static RequestSpecification fakerApiRequest(){
+        return new RequestSpecBuilder()
+                .setBaseUri(FAKER_API_BASE_URI)
+                .setContentType(ContentType.JSON)
+                .build()
+                .filter(new AllureRestAssured());
+    }
+
     public static ResponseSpecification buildAResponse(){
-        ResponseSpecification resSpec = new ResponseSpecBuilder()
+        return new ResponseSpecBuilder()
                 .expectStatusCode(200)
                 .build();
-        return resSpec;
     }
 }
