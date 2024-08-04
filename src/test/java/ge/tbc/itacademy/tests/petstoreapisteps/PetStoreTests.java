@@ -2,7 +2,10 @@ package ge.tbc.itacademy.tests.petstoreapisteps;
 
 import ge.tbc.itacademy.data.steps.petstoreapisteps.GetPetResourceSteps;
 import ge.tbc.itacademy.data.steps.petstoreapisteps.PostNewPet;
+import ge.tbc.itacademy.data.steps.petstoreapisteps.PostOrderSteps;
 import ge.tbc.itacademy.data.steps.petstoreapisteps.UpdatePetResourceSteps;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -10,15 +13,19 @@ import org.testng.annotations.Test;
 import static ge.tbc.itacademy.data.constants.Constants.PET_NAME;
 import static ge.tbc.itacademy.data.constants.Constants.UPDATED_STATUS;
 
+@Epic("Pet Store Tests")
+@Feature("Post Request Tests")
 public class PetStoreTests {
     PostNewPet steps;
     GetPetResourceSteps getPetSteps;
     UpdatePetResourceSteps update;
+    PostOrderSteps orderSteps;
     @BeforeClass
     public void beforeClass() {
         steps = new PostNewPet();
         getPetSteps = new GetPetResourceSteps();
         update = new UpdatePetResourceSteps();
+        orderSteps = new PostOrderSteps();
     }
 
     @Test
@@ -48,4 +55,15 @@ public class PetStoreTests {
         update.validateNameUpdate(getResponse, PET_NAME)
                 .validateStatusUpdate(getResponse, UPDATED_STATUS);
     }
+
+    @Test(description = "posting a new pet order")
+    public void PostOrderTest() {
+        orderSteps.creatingRequestBody()
+                .postingRequest()
+                .validateOrderId()
+                .petIdValidation()
+                .statusValidation();
+    }
+
+
 }
